@@ -1,8 +1,8 @@
 \documentclass[a4paper,11pt,oneside,fleqn]{book}
 
-
 % USED PACKAGES
 \usepackage[T1]{fontenc}                                        % Use standard characters.
+\usepackage[utf8]{inputenc}                                     % Use standard characters.
 \usepackage[french]{babel}                                      % Added functionality for french.
 \usepackage{bm}													% For bold font on math.
 \usepackage{cite}                                               % Improved citation handling.
@@ -22,43 +22,24 @@
 \usepackage{multirow}											% Tables with multiple rows.
 \usepackage{tabulary}											% Easiness in setting tables widths.
 \usepackage{amsfonts}											% Fonts for math.
+\usepackage{csquotes}                                           % Handles quotes in text
+\usepackage{etoolbox}                                           % Used for fixing titles height
 \usepackage{longtable}                                          % Tables that span more than one page.
 \usepackage{enumerate}										    % Fancy enumerate in case of broken lists.
 \usepackage{mathtools}											% Extension of math language.
 \usepackage{subcaption}											% For subfigures.
-\usepackage[Lenny]{fncychap}                                    % Stylized chapter titles.
+\usepackage[Glenn]{fncychap}                                    % Stylized chapter titles.
 \usepackage[pdftex]{hyperref}									% Type of compiling.
-\usepackage[ruled,vlined,algochapter]{algorithm2e}		                            % For drawing algorithms.
+\usepackage[ruled,vlined,algochapter,french,onelanguage]{algorithm2e}		                            % For drawing algorithms.
 \usepackage[font=footnotesize,labelfont=bf,margin=0.5cm]{caption}	                % Setting properties of labels.
 \usepackage[inner=4cm,outer=2.5cm,top=4cm,bottom=2.5cm,headheight=15pt]{geometry}	% Setting margins.
 
 
-% DEFINE SYMBOLS SO I DON'T USE FDSYMBOL PACKAGE
+% MODIFY TITLES
 \makeatletter
-\def\fdsy@scale{1}
-\newcommand\fdsy@mweight@normal{Book}
-\newcommand\fdsy@mweight@small{Book}
-\newcommand\fdsy@bweight@normal{Medium}
-\newcommand\fdsy@bweight@small{Medium}
-\DeclareFontFamily{U}{FdSymbolA}{}
-\DeclareFontShape{U}{FdSymbolA}{m}{n}{
-    <-7.1> s * [\fdsy@scale] FdSymbolA-\fdsy@mweight@small
-    <7.1-> s * [\fdsy@scale] FdSymbolA-\fdsy@mweight@normal
-}{}
-\DeclareFontShape{U}{FdSymbolA}{b}{n}{
-    <-7.1> s * [\fdsy@scale] FdSymbolA-\fdsy@bweight@small
-    <7.1-> s * [\fdsy@scale] FdSymbolA-\fdsy@bweight@normal
-}{}
-
-\def\cleardoublepage{\clearpage\if@twoside \ifodd\c@page\else
-  \hbox{}\thispagestyle{empty}\newpage\if@twocolumn\hbox{}\newpage\fi\fi\fi}    % Clear pages if empty.
-
+\patchcmd{\@makechapterhead}{\vspace*{50\p@}}{\vspace*{0pt}}{}{}
+\patchcmd{\@makeschapterhead}{\vspace*{50\p@}}{\vspace*{0pt}}{}{}
 \makeatother
-\DeclareSymbolFont{fdsymbols}{U}{FdSymbolA}{m}{n}
-\SetSymbolFont{fdsymbols}{bold}{U}{FdSymbolA}{m}{n}
-\let\bigtriangleup\relax
-\DeclareMathSymbol{\bigtriangleup}{\mathbin}{fdsymbols}{94}
-\DeclareMathSymbol{\largewhitestar}{\mathord}{fdsymbols}{150}
 
 
 % DEFINE FANCY HEAD AND FOOT AREA
@@ -89,6 +70,8 @@
     citecolor = {mygren}
 }
 
+\MakeOuterQuote{"}
+
 
 % SET LENGTHS OF DOCUMENT
 %\setlength\parskip{0.5\baselineskip}                         % Space between paragraphs.
@@ -118,15 +101,17 @@
 
 \mainmatter
 \chapter{Introduction} \label{ch:intro}
+\vspace*{-50pt}
 \input{chapters/1-Introduction.tex}
 \chapter{Traveling Salesman Problem} \label{ch:tsp}
-\input{chapters/2-Voyageur.tex}
-\chapter{Implementation} \label{ch:implementation}
-\input{chapters/1-Introduction.tex}
+\vspace*{-50pt}
+\input{chapters/2-Implementation.tex}
 \chapter{Résultats} \label{ch:resultats}
-\input{chapters/1-Introduction.tex}
+\vspace*{-50pt}
+\input{chapters/3-Resultats.tex}
 \chapter{Conclusion} \label{ch:conclusion}
-\input{chapters/5-Conclusion.tex}
+\vspace*{-50pt}
+\input{chapters/4-Conclusion.tex}
 
 % HOW TO ADD APPENDICES IF NEEDED
 % \newpage

@@ -1,0 +1,39 @@
+\DontPrintSemicolon
+\KwIn{Initial tour from Nearest Neighbor}
+\KwOut{Improved tour and total distance}
+
+\vspace{10pt}
+improved $\gets$ \texttt{true}\;
+tour $\gets$ visit\_order excluding last city\;
+best\_distance $\gets$ total distance of tour + return to start\;
+
+\vspace{10pt}
+\While{improved}{
+    improved $\gets$ \texttt{false}\;
+    
+    \vspace{10pt}
+    \For{$i \gets 1$ \KwTo $n - 2$}{
+        \For{$j \gets i + 1$ \KwTo $n - 1$}{
+            new\_tour $\gets$ tour with segment $[i:j]$ reversed\;
+            new\_distance $\gets$ distance of new\_tour + return to start\;
+
+            \If{new\_distance $<$ best\_distance}{
+                tour $\gets$ new\_tour\;
+                best\_distance $\gets$ new\_distance\;
+                improved $\gets$ \texttt{true}\;
+                \textbf{break}\;
+            }
+        }
+        
+        \vspace{10pt}
+        \If{improved}{\textbf{break}}
+    }
+}
+
+\vspace{10pt}
+visit\_order $\gets$ tour + [start city]\;
+total\_distance $\gets$ best\_distance\;
+
+\vspace{10pt}
+\Return visit\_order\;
+\caption{2-opt Optimization}

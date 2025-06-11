@@ -1,13 +1,17 @@
 from map_generating_functions import generate_map
+from import_tsplib import import_tsplib
 import numpy as np
 import pandas as pd
 
 class Map():
-  def __init__(self, file = None, n_cities = 10, percentage = 1, symmetric = True, min_dist = 10, max_dist = 100, index_first = 0):
+  def __init__(self, file = None, n_cities = 10, min_dist = 10, max_dist = 100, index_first = 0):
     if file == None:
-      self.matrix = generate_map(n_cities, percentage, symmetric, min_dist, max_dist, export = False)
+      self.matrix = generate_map(n_cities, min_dist, max_dist, export = False)
     else:
-      self.matrix = pd.read_csv(file, index_col=0).to_numpy()
+      if file.split('.')[-1] == "csv":
+        self.matrix = pd.read_csv(file, index_col=0).to_numpy()
+      elif file.split('.')[-1] == "tsp":
+        self.matrix, self.coords = import_tsplib(file)
             
     self.cities = []
     
