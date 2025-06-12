@@ -1,30 +1,32 @@
 import numpy as np
+import numbers
 
+# Fonction pour importer des réseaux de villes en format tsp. Les fichiers sont
+# la propriété intellectuelle de l'Université de Heidelberg :
+# http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/
+# Entrées: - filename : nom de fichier a importer
+# Sorties: - dist_matrix : matrice de distances entre villes
+#          - coords : coordonnées des villes
 def import_tsplib(filename):
     coords = []
+    
+    # On vérifie chaque ligne du fichier. Si commence par un nombre,
+    # on importe la coordonnée de la ville i.
     with open(filename, 'r') as file:
-        dimension = None
-        in_node_section = False
-
         for line in file:
             line = line.strip()
-            if line.startswith("DIMENSION"):
-                dimension = int(line.split(":")[1])
-            elif line.startswith("NODE_COORD_SECTION"):
-                in_node_section = True
+            parts = line.split()
+            
+            if isinstance(parts[0], numbers.Number):
+                coords.append([float(parts[1]), float(parts[2])])
             elif line == "EOF":
                 break
-            elif in_node_section:
-                parts = line.split()
-                if len(parts) >= 3:
-                    coords.append([float(parts[1]), float(parts[2])])
-
-    if len(coords) != dimension:
-        raise ValueError("Mismatch between declared dimension and number of coordinates.")
 
     coords = np.array(coords)
     dist_matrix = np.zeros((len(coords), len(coords)))
     
+    # On calcule la distance euclidienne entre deux villes 
+    # et remplit la matrice des distances.
     for i in range(len(coords)):
         for j in range(len(coords)):
             if i != j:
