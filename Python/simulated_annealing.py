@@ -14,16 +14,14 @@ def longueur_chemin(chemin, matrice_distances):
 # Génération d’un voisin
 
 def gen_voisin(chemin):
-   
-    a, b = random.sample(range(1, len(chemin) - 2), 2) # CHoisit deux positions aléatoires 
-    voisin = chemin[:]
-    voisin[a], voisin[b] = voisin[b], voisin[a] # On échange les deux villes
+    a, b = sorted(random.sample(range(1, len(chemin) - 1), 2))
+    voisin = chemin[:a] + chemin[a:b][::-1] + chemin[b:]
     return voisin
 
 
 # Recuit simulé
 
-def recuit_simule(matrice_distances, chemin_initial, temperature_initiale=5000, alpha=0.999, iterations_max=20000): # Chemin initial = heuristique de départ, temp. initiale = contrôle la proba. d'accepter des mauvaises solutions, alpha = diminue la temp.
+def recuit_simule(matrice_distances, chemin_initial, temperature_initiale=15000, alpha=0.9995, iterations_max=50000): # Chemin initial = heuristique de départ, temp. initiale = contrôle la proba. d'accepter des mauvaises solutions, alpha = diminue la temp.
     courant = chemin_initial[:] # On copie le chemin actuel
     meilleur = courant[:] # Meilleure solution 
     distance_courante = longueur_chemin(courant, matrice_distances)
@@ -66,12 +64,21 @@ def afficher_chemin(villes, chemin):
     plt.axis("equal")
     plt.show()
 
-
-chemin_rs, distance_rs = recuit_simule(matrice, chemin_initial)
+villes = generer_villes(20)
+matrice = construire_matrice_distances(villes)
+chemin_init, _ = heuristique_insertion(villes, matrice)
+# Utilisation du chrono 
+start_rs = perf_counter()
+chemin_rs, distance_rs = recuit_simule(matrice, chemin_init)
+end_rs = perf_counter()
+time_rs = end_rs - start_rs
 print("Distance après recuit simulé :", round(distance_rs, 2))
-if chemin_rs == chemin_initial:
-    print("Le recuit n’a rien amélioré.")
+print("Temps de calcul :", round(time_rs, 6), "secondes")
+distance_init = longueur_chemin(chemin_init, matrice)
+# Compare les distances pour vérifier que le recuit a fonctionné
+if round(distance_rs, 2) >= round(distance_init, 2):
+    print("Le recuit n’a pas amélioré la distance.")
 else:
-    print("Le chemin a été amélioré.")
+    print("Le recuit a amélioré la distance.")
 
 afficher_chemin(villes, chemin_rs)
