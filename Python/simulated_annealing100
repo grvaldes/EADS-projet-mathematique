@@ -1,0 +1,20 @@
+villes = generer_villes(100)
+matrice = construire_matrice_distances(villes)
+chemin_init, _ = heuristique_insertion(villes, matrice)
+
+start_rs = perf_counter()
+chemin_rs, distance_rs = recuit_simule(matrice, chemin_init)
+end_rs = perf_counter()
+temps_rs = end_rs - start_rs
+
+print("Distance après recuit simulé :", round(distance_rs, 2))
+print("Temps de calcul :", round(temps_rs, 6), "secondes")
+
+distance_init = longueur_chemin(chemin_init, matrice)
+if round(distance_rs, 2) >= round(distance_init, 2):
+    print("Le recuit n’a pas amélioré la distance.")
+else:
+    print("Le recuit a amélioré la distance.")
+
+
+afficher_chemin(villes, chemin_rs)
