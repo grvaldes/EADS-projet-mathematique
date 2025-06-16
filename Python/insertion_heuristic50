@@ -1,10 +1,10 @@
-villes = generer_villes(50)
-matrice = construire_matrice_distances(villes)
+villes = gen_villes(50)
+matrice = constr_matrice_distances(villes)
 start_insert = perf_counter()
-chemin, distance_totale = heuristique_insertion(villes, matrice)
+chemin_init, distance_totale = heuristique_insert(villes, matrice)
 end_insert = perf_counter()
 temps_insert = end_insert - start_insert
 
 print("Distance totale :", round(distance_totale, 2))
 print("- Temps de calcul :", round(temps_insert, 6), "secondes")
-afficher_chemin(villes, chemin)
+afficher_chemin(villes, chemin_init)
