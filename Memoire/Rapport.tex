@@ -1,0 +1,68 @@
+\documentclass{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel} 
+\usepackage{eurosym}
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\pagestyle{fancy}
+
+\renewcommand{\headrulewidth}{1pt}
+\fancyhead[C]{} 
+\fancyhead[L]{PROJET TSP}
+\fancyhead[R]{VALDES-ALONZO SOGHAIER}
+\setlength{\headheight}{23pt}
+
+\graphicspath{{images/}}
+
+\title{\underline{Projet Mathématiques - Informatique}}
+\author{Gabriel VALDES-ALONZO\\ Sami SOGHAIER  \\\\ Licence 3 - Mathématiques-Informatique \\ Maria Raquel URENA PEREZ }
+\date{Juin 2025}
+
+\begin{document}
+\maketitle
+\begin{center}
+    \includegraphics[scale=0.7]{index.png}
+\end{center}
+
+\newpage
+
+\section*{\underline{Introduction}}
+Le problème du voyageur de commerce \cite{book:TSP,chap:TSP} (Traveling Salesman Problem en anglais) est un problème classique d’optimisation combinatoire : le problème consiste à trouver le plus court chemin passant une seule fois par une liste de $n$ villes définies, et revenant au point initial.
+
+Le TSP a diverses applications dans plusieurs domaines comme la logistique, séquençage d'ADN, manufacture, et autres. Chaque problème composé d'un ensemble que doit être rempli dans un ordre particulier pourrait être pensé comme le problème TSP, où on cherche un chemin moins coûteux. Le problème peut être résolu exactement si tous les chemins entre villes sont analyses et comparés, mais la quantité de chemins a vérifier augmente rapidement, ce qu'est connu comme un problème NP-Difficile.
+
+Dû a son coût, des algorithmes sont proposés pour trouver des solutions approximatives que peuvent être optimales ou pas, mais qui résolut le problème rapidement. Dans ce travail, seulement la version symétrique de l'algorithme sera analyse. Cela veut dire que les distances consideres entre villes sont égales dans les deux sens. Les villes sont aussi considérés toutes interconnectés, donc il existera toujours une connection directe entre une ville et l'autre.
+
+Nous nous sommes répartis le travail de la façon suivante : après concertation, nous nous sommes mis d'accord sur le fait de prendre deux heuristiques chacun. L'heuristique du plus proche voisin ainsi que 2-opt sont une continuité, comme l'heuristique d'Insertion qui fonctionne avec le recuit simulé. 
+En ce qui concerne le rapport, nous l'écrivons chacun ensemble en développant nos parties respectives.
+
+On va donc vous présenter l’implémentation de ces quatre heuristiques ainsi que les différents avantages et inconvénients de celles-ci. 
+On procédera ensuite à l’analyse des résultats puis on finira par conclure en comparant nos résultats. 
+\newpage
+
+\section*{\underline{Heuristiques implementes}}
+Dans ce contexte qu’on va mettre en pratique des heuristiques afin d’apporter des solutions qui soient le plus correctes possible en minimisant le temps de calcul.
+On va donc se pencher sur les quatre heuristiques suivantes :
+\begin{itemize}
+    \item Nearest Neighbor : 
+    \item Heurisitique d’Insertion : consiste à assembler un chemin en insérant à chaque étape la ville qui perturbe le moins possible le parcours déjà mis en place. 
+    \item 2-opt :
+    \item Recuit Simulé : consiste à utiliser une solution déjà proposée et à l’améliorer en utilisant des solutions temporaires qui ne sont pas optimales pour éviter les minima-locaux. 
+\end{itemize}
+On a donc décider de travailler sur les quatre heuristiques pré-citées afin d'avoir une solide base de donées pour comparer nos résultats.
+
+\section*{\underline{Résultats}}
+
+\newpage
+
+\section*{\underline{Conclusion}}
+
+\newpage
+\bibliographystyle{unsrt}
+\bibliography{bibliography}
+
+\end{document}
