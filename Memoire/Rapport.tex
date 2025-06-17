@@ -1,4 +1,5 @@
-\documentclass{article}
+\documentclass[a4paper,11pt,fleqn]{article}
+\usepackage[inner=2.5cm,outer=2.5cm,top=4cm,bottom=3.5cm]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[french]{babel} 
@@ -7,6 +8,7 @@
 \usepackage{fancyhdr}
 \usepackage{graphicx}
 \usepackage{amsmath}
+\usepackage{float}
 \usepackage{hyperref}
 \pagestyle{fancy}
 
@@ -16,19 +18,19 @@
 \fancyhead[R]{VALDES-ALONZO SOGHAIER}
 \setlength{\headheight}{23pt}
 
-\graphicspath{{images/}}
-
 \title{\underline{Projet Mathématiques - Informatique}}
 \author{Gabriel VALDES-ALONZO\\ Sami SOGHAIER  \\\\ Licence 3 - Mathématiques-Informatique \\ Maria Raquel URENA PEREZ }
 \date{Juin 2025}
 
 \begin{document}
+\pagenumbering{gobble}
 \maketitle
 \begin{center}
     \includegraphics[scale=0.7]{index.png}
 \end{center}
 
 \newpage
+\pagenumbering{arabic}
 
 \section*{\underline{Introduction}}
 Le problème du voyageur de commerce \cite{book:TSP,chap:TSP} (Traveling Salesman Problem en anglais) est un problème classique d’optimisation combinatoire : le problème consiste à trouver le plus court chemin passant une seule fois par une liste de $n$ villes définies, et revenant au point initial.
@@ -55,7 +57,90 @@ On va donc se pencher sur les quatre heuristiques suivantes :
 \end{itemize}
 On a donc décider de travailler sur les quatre heuristiques pré-citées afin d'avoir une solide base de donées pour comparer nos résultats.
 
+\newpage
+
 \section*{\underline{Résultats}}
+
+\subsection*{Voisins plus proches}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/NN_50_villes_3departs.pdf}
+    \caption{Résultat pour l'algorithme des Voisins plus proches avec trois départs différents (50 villes).}
+    \label{fig:nn-50}
+\end{figure}
+
+\subsection*{2-opt}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/2opt_50_villes_nn.pdf}
+    \caption{Résultat pour l'algorithme 2-opt et sa comparaison avec le résultat des Voisins plus proches (50 villes).}
+    \label{fig:2opt-nn}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/2opt_50_villes_depart_23.pdf}
+    \caption{Résultat de 2-opt et sa comparaison avec le résultat des Voisins plus proches pour un départ au milieu.}
+    \label{fig:2opt-dep23}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/2opt_50_villes_depart_42.pdf}
+    \caption{Résultat de 2-opt pour un départ différent. On vérifie que le résultat de 2-opt est dépendent du résultat initial des voisins plus proches, donc le résultat n'est pas fixé.}
+    \label{fig:2opt-dep42}
+\end{figure}
+
+\subsection*{Heuristique d'insertion}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.35\textwidth]{images/insertion_20_villes.pdf}
+    \caption{Résultat pour l'heuristique d'insertion avec 20 villes.}
+    \label{fig:insert-20}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/insertion_100_villes_nn.pdf}
+    \caption{Résultat pour l'heuristique d'insertion avec 100 villes et une comparaison avec le résultat des Voisins plus proches pour le même réseau.}
+    \label{fig:insert-100}
+\end{figure}
+
+\subsection*{Recuit simulé}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/recuit_simule.pdf}
+    \caption{Résultat pour l'heuristique d'insertion (à gauche) et sa amelioration par l'algorithme de Recuit simulé (à driote) avec 100 villes.}
+    \label{fig:recuit}
+\end{figure}
+
+\subsection*{Comparaison et complexité}
+
+\begin{table}[H]
+    \centering
+    \caption{Distance obtenu avec les différents algorithmes pour une quantité $N$ de villes.}
+    \label{tab:distances}
+    \begin{tabular}{lcccc}
+        \hline
+        N villes & VPP & 2-opt & Heuristique d'insertion & Recuit simulé \\ \hline\hline
+        10  & 286.2587  & 266.1043  & 299.9325 & 266.1043 \\
+        50  & 588.5159  & 549.2188  & 615.9452 & 565.7999 \\
+        100 & 888.5622 & - & 853.6044 & 827.6085 \\
+        500 & 2099.8537 & - & 1936.8251 & 1936.8251 \\
+        1000 & 2916.9891 & - & 2716.844 & 2716.8443  \\ \hline
+    \end{tabular}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/complexite_temporelle.pdf}
+    \caption{Nombre de villes vs. le temps moyenne d'execution des algorithmes.}
+    \label{fig:temps}
+\end{figure}
 
 \newpage
 
