@@ -123,7 +123,18 @@ Le second est certe plus rapide que le premier mais il est aussi un peu plus lon
 
 \subsection*{Recuit simulé}
 \paragraph{}
-Comme on le constate sur la figure suivante, même si le temps de calcul augmente par rapport à l'heuristique d'insertion, la distance du chemin est diminuée. 
+Nous obtenons les mesures suivantes : 
+\begin{itemize}
+    \item distance totale : 897.78
+    \item temps de calcul : 0.031324
+\end{itemize} 
+pour l'heuristique d'insertion contre :
+\begin{itemize}
+    \item distance totale : 865.26
+    \item temps de calcul : 0.308325 secondes
+\end{itemize}
+pour le recuit simule.
+Comme on le constate sur la figure suivante, même si le temps de calcul augmente et est multiplié par 10 par rapport à l'heuristique d'insertion, la distance du chemin est diminuée. 
 Le temps de calcul reste très faible : environ 0.3 secondes, ce qui rend le recuit simulé optimal pour des calculs de chemins avec un nombre de villes important.
 \begin{figure}[H]
     \centering
