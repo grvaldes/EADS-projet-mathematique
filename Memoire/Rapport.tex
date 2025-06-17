@@ -94,14 +94,26 @@ On a donc décider de travailler sur les quatre heuristiques pré-citées afin d
 \end{figure}
 
 \subsection*{Heuristique d'insertion}
-
+\paragraph{}
+Pour l'heuristique d'insertion avec 20 villes, on obtient un graphe fluide avec une distance totale de 355.04 pour un temps de calcul de 0.000535 secondes.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.35\textwidth]{images/insertion_20_villes.pdf}
     \caption{Résultat pour l'heuristique d'insertion avec 20 villes.}
     \label{fig:insert-20}
 \end{figure}
-
+\paragraph{}
+Les résultats obtenus pour l'heuristique d'insertion avec 100 villes sont les suivants :
+\begin{itemize}
+    \item distance totale : 930.16
+    \item temps de calcul : 0.024143 secondes
+\end{itemize}
+tandis que les résultats pour l'heuristique de voisins plus proches sont :
+\begin{itemize}
+    \item distance totale : 1062.79
+    \item temps de calcul : 0.000609 secondes\\
+Le second est certe plus rapide que le premier mais il est aussi un peu plus long, et comme on peut le voir sur la figure ci-après, l'heuristique d'insertion ne coupe pas le chemin contrairement au second ce qui le rend plus agréable à étudier. 
+\end{itemize}
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/insertion_100_villes_nn.pdf}
@@ -110,7 +122,9 @@ On a donc décider de travailler sur les quatre heuristiques pré-citées afin d
 \end{figure}
 
 \subsection*{Recuit simulé}
-
+\paragraph{}
+Comme on le constate sur la figure suivante, même si le temps de calcul augmente par rapport à l'heuristique d'insertion, la distance du chemin est diminuée. 
+Le temps de calcul reste très faible : environ 0.3 secondes, ce qui rend le recuit simulé optimal pour des calculs de chemins avec un nombre de villes important.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/recuit_simule.pdf}
