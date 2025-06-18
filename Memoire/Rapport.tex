@@ -16,11 +16,11 @@
 \renewcommand{\headrulewidth}{1pt}
 \fancyhead[C]{} 
 \fancyhead[L]{PROJET TSP}
-\fancyhead[R]{VALDES-ALONZO SOGHAIER}
+\fancyhead[R]{SOGHAIER / VALDES-ALONZO}
 \setlength{\headheight}{23pt}
 
 \title{\underline{Projet Mathématiques - Informatique}}
-\author{Gabriel VALDES-ALONZO\\ Sami SOGHAIER  \\\\ Licence 3 - Mathématiques-Informatique \\ Maria Raquel URENA PEREZ }
+\author{Sami SOGHAIER \\ Gabriel VALDES-ALONZO\\ \\ Licence 3 - Mathématiques-Informatique \\ Maria Raquel URENA PEREZ }
 \date{Juin 2025}
 
 \begin{document}
@@ -35,14 +35,19 @@
 
 \section*{\underline{Introduction}}
 Le problème du voyageur de commerce \cite{book:TSP,chap:TSP} (Traveling Salesman Problem en anglais) est un problème classique d’optimisation combinatoire : le problème consiste à trouver le plus court chemin passant une seule fois par une liste de $n$ villes définies, et revenant au point initial.
+\newline
 
 Le TSP a diverses applications dans plusieurs domaines comme la logistique, séquençage d'ADN, manufacture, et autres. Chaque problème composé d'un ensemble qui doit être rempli dans un ordre particulier pourrait être pensé comme le problème TSP, où on cherche un chemin moins coûteux. Le problème peut être résolu exactement si tous les chemins entre villes sont analysés et comparés, mais la quantité de chemins à vérifier augmente rapidement, ce qui est connu comme un problème NP-Difficile.
+\newline
 
 Dû à son coût, des algorithmes sont proposés pour trouver des solutions approximatives qui peuvent être optimales ou non-optimales, mais qui résoud le problème rapidement. Dans ce travail, seulement la version symétrique de l'algorithme sera analysé. Cela veut dire que les distances considérées entre villes sont égales dans les deux sens. Les villes sont aussi considérées toutes interconnectées, donc il existera toujours une connexion directe entre une ville et l'autre.
+\newline
 
 Le travail a été réparti de la façon suivante : chaque personne a pris deux algorithmes à implémenter. L'heuristique du plus proche voisin ainsi que 2-opt sont une continuité, comme l'heuristique d'Insertion qui fonctionne avec le recuit simulé. En ce qui concerne le rapport, il a été écrit en développant chacun ses parties respectives et en faisant les analyses ensemble.
+\newline
 
 Dans les prochaines sections, on procédera ensuite à l’analyse des résultats et puis on finira par conclure en comparant les résultats et en regardant les perspectives futures.
+\newline
 
 Divers outils ont été utilisés pour travailler sur le rapport :
 \begin{itemize}[noitemsep,topsep=5pt]
@@ -90,8 +95,7 @@ L'heuristique 2-opt \cite{article:2opt} est aussi une procédure simplifiée pou
 \end{figure}
 
 \subsection*{Recuit Simulé}
-Le recuit simulé \cite{article:recuit}provient du procédé de fabrication des métaux où le refroiddisement plus ou moins lent favorise le durcissement et la stabilité du métal. Cette heuristique fonctionne sur le même principe.
-Le recuit simulé consiste à utiliser comme point de départ une solution déjà proposée (ici, l'heurisitique d'insertion) et à l’améliorer en utilisant des solutions temporaires même si elles ne sont pas optimales afin d'éviter les minima-locaux. 
+Le recuit simulé \cite{article:recuit}provient du procédé de fabrication des métaux où le refroidissement plus ou moins lent favorise le durcissement et la stabilité du métal. Cette heuristique fonctionne sur le même principe. Le recuit simulé consiste à utiliser comme point de départ une solution déjà proposée (ici, l’heuristique d'insertion) et à l’améliorer en utilisant des solutions temporaires même si elles ne sont pas optimales afin d'éviter les minima-locaux. 
 
 \begin{figure}[H]
     \centering
@@ -100,6 +104,7 @@ Le recuit simulé consiste à utiliser comme point de départ une solution déj�
     \label{fig:charte-recuit}
 \end{figure}
 
+\newpage
 \section*{\underline{Résultats}}
 On présente les résultats obtenus de l'application des algorithmes dans des réseaux de villes. Le code est organisé de cette façon : on peut donner une graine aléatoire qui génère toujours le même réseau, ce qui facilite les comparaisons entre les différents algorithmes.
 
@@ -131,7 +136,7 @@ Pour l'algorithme 2-opt on utilise le même réseau que dans l'heuristique préc
     \label{fig:2opt-nn}
 \end{figure}
 
-Si l'on applique l'heuristique 2-opt avec une autre solution de voisins plus proches (dans ce cas le même réseau avec départ de la ville 23) on a la distance qui diminue de 715.63 à 607.72 mais le parcours est différent, ce qui nous dit que l'optimalité de l'algorithme 2-opt dépend également de son initialisation.
+Si l'on applique l'heuristique 2-opt avec une autre solution de voisins plus proches (dans ce cas le même réseau avec départ de la ville 23) on a la distance qui diminue de 715.63 à 607.72 mais le parcours est différent, ce qui dit que l'optimalité de l'algorithme 2-opt dépend également de son initialisation.
 
 \begin{figure}[H]
     \centering
@@ -185,7 +190,7 @@ L'algorithme VPP est certe plus rapide que le premier mais il prendre aussi un c
 
 \subsection*{Recuit simulé}
 \paragraph{}
-Nous obtenons les mesures suivantes pour l'heuristique d'insertion : 
+Les mesures suivantes ont été obtenus pour l'heuristique d'insertion : 
 \begin{itemize}[noitemsep,topsep=5pt]
     \item distance totale : 897.78,
     \item temps de calcul : 31.324 millisecondes,
@@ -245,18 +250,16 @@ On peut voir que l'algorithme de voisins plus proches, pour les cas que l'on a a
 \newpage
 
 \section*{\underline{Conclusion}}
-On a utilisé divers outils informatique comme Overleaf pour écrire le rapport et pouvoir y travailler et y apporter des modifications en temps réel, Notebook pour rendre un notebook Jupyter et Github afin de collaborer de manière efficace.
-Chacun à travailler sur ces heuristiques respectives puis on a mis en commun nos résultats afin de les comprendre et de les comparer.
+Dans ce project, le problème du voyageur de commerce a été analysé et quelques heuristiques de résolution ont été présentés. Divers outils informatique ont été utilisés pour le développement de ce projet, tels comme Overleaf pour écrire le rapport et pouvoir y travailler et y apporter des modifications en temps réel, l'utilisation de Python et Notebook pour rendre un notebook Jupyter et GitHub afin de collaborer de manière efficace. Chacun à travaillé sur ces heuristiques respectives puis les résultats ont été mis en commun afin de les comprendre et de les comparer.
 \newline
 
-Il ressort de notre étude des heuristiques que chacune peut être utile selon le degré d'acceptation mis en place, c'est-à-dire si l'on souhaite un résultat rapide, un résultat court ou bien un résultat équilibré. Le recuit simulé est  dans l'ensemble la meilleure heuristique puisqu'en cas de gros réseaux, on a un résultat équilibré : il est assez long en temps de calcul mais la distance est aussi moindre. L'heuristique 2-opt est aussi efficace puisqu'elle améliore l'heuristique VPP mais tout celà dépend de son initialisation.Par contre, en cas de petits réseaux, l'heuristique VPP est plus efficace que l'heuristique d'insertion.
+Il ressort de cette étude des heuristiques que chacune peut être utile selon le degré d'acceptation mis en place, c'est-à-dire si l'on souhaite un résultat rapide, un résultat court ou bien un résultat équilibré. Le recuit simulé est dans l'ensemble la meilleure heuristique puisqu'en cas de gros réseaux, on a un résultat équilibré : il est assez long en temps de calcul mais la distance est aussi moindre. L'heuristique 2-opt est aussi efficace puisqu'elle améliore l'heuristique VPP mais tout cela dépend de son initialisation. Par contre, en cas de petits réseaux, l'heuristique VPP est plus efficace que l'heuristique d'insertion, particulièrement si le temps d'exécution est une facteur importante a considérer.
 \newline
 
-Les problèmes rencontrés sur le projet ont été le travail à distance pour bien s'accorder sur la façon de travailler et d'avoir les mêmes points de départ afin de comparer les heuristiques.
-Un autre problème a été le temps de traitement et de calcul de l'heuristique 2-opt qui était très long.
+Les problèmes rencontrés sur le projet ont été le travail à distance pour bien s'accorder sur la façon de travailler et d'avoir les mêmes points de départ afin de comparer les heuristiques. Un autre problème a été le temps de traitement et de calcul de l'heuristique 2-opt qui était très long. Dans un future implementation, il est nécessaire de vérifier avec soin le code et de l'optimiser. Python est utile pour une première tentative, mais pour une solution plus efficace il y a des autres langages mieux adaptés pour ces tâches. Même dans Python, il a des possibilités pour améliorer la solution : tous le travail a été sans l'utilisation de librairies optimisés tel comme numpy, qui permet la manipulation efficient de matrices.
 \newline
 
-Pou conclure, ce projet a été très intéressant à traiter, il nous a permis de travailler en équipe et d'approfondir nos connaissances sur les algorithmes, eten particulier de découvrir les heuristiques liées au problème du voyageur de commerce.
+Pour conclure, ce projet a été très intéressant à traiter, il permette de travailler en équipe et d'approfondir nos connaissances sur les algorithmes, et en particulier de découvrir les heuristiques liées au problème du voyageur de commerce, et de faire les premiers pas dans le domain de l'optimisation.
 
 
 \newpage
@@ -264,6 +267,3 @@ Pou conclure, ce projet a été très intéressant à traiter, il nous a permis 
 \bibliography{bibliography}
 
 \end{document}
-
-
-    
