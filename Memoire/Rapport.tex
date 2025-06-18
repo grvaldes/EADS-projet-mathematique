@@ -51,40 +51,82 @@ Nous avons utilisés divers outils pour travailler sur notre rapport :
     \item VSCode : pour travailler sur le code du projet,
     \item Github : pour stocker et échanger les différents supports.
 \end{itemize}
-\newpage
 
 \section*{\underline{Heuristiques implementes}}
-Dans ce contexte qu’on va mettre en pratique des heuristiques afin d’apporter des solutions qui soient le plus correctes possible en minimisant le temps de calcul.
-On va donc se pencher sur les quatre heuristiques suivantes :
-\begin{itemize}
-    \item Nearest Neighbor : 
-    \item Heurisitique d’Insertion : consiste à assembler un chemin en insérant à chaque étape la ville qui perturbe le moins possible le parcours déjà mis en place. 
-    \item 2-opt :
-    \item Recuit Simulé : consiste à utiliser une solution déjà proposée et à l’améliorer en utilisant des solutions temporaires qui ne sont pas optimales pour éviter les minima-locaux. 
-\end{itemize}
-On a donc décider de travailler sur les quatre heuristiques pré-citées afin d'avoir une solide base de donées pour comparer nos résultats.
-
-\newpage
-
-\section*{\underline{Résultats}}
-
-\subsection*{Voisins plus proches}
+Dans le contexte de ce travail sur le TSP,  on va mettre en pratique des heuristiques afin d’apporter des solutions qui soient le plus correctes possible en minimisant le temps de calcul.
+Les heuristiques analysés sont las suivantes :
+\subsection*{Voisins Plus Proches}
+L'heuristique VPP \cite{article:nearest}, aussi connu par son nom en anglais Nearest Neighbors, est un des algorithmes plus simples et intuitives pour résoudre le TSP. Comme son nom le dit, ;é§tant donnée une ville de départ quelconque (choisi arbitrairement), on cherche entre tous les villes voisines laquelle qui est à la moindre distance. Une fois dans ce ville, on la marque comme visité et continue en cherchant la ville la plus proche encore pas visité. On répète ce procedure jusqu'à visiter tous les villes dans la réseau. La complexité de cet algorithme est exactement $\mathcal{O}(n^2)$ (avec $n$ la quantité de villes), car pour chaque ville il faut vérifier la distance avec chaque voisin.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{images/NN_50_villes_3departs.pdf}
-    \caption{Résultat pour l'algorithme des Voisins plus proches avec trois départs différents (50 villes).}
-    \label{fig:nn-50}
+    \includegraphics[width=0.7\textwidth]{images/chart-nn.png}
+    \caption{Diagramme de l'algorithme.}
+    \label{fig:charte-nn}
+\end{figure}
+
+\subsection*{Heurisitique d’Insertion}
+consiste à assembler un chemin en insérant à chaque étape la ville qui perturbe le moins possible le parcours déjà mis en place. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{images/charte-insert.png}
+    \caption{Diagramme de l'algorithme.}
+    \label{fig:charte-insert}
 \end{figure}
 
 \subsection*{2-opt}
+L'heuristique 2-opt \cite{article:2opt} est aussi un procedure simplifié pour chercher le chemin plus optimale. Pour un chemin donné, l'algorithme cherche améliorer le parcours en inversent des sous-chemins. Donc pour chaque ville, l'algorithme cherche le parcours à suivre et vérifie si la distance totale est réduit quand on inverse une partie parcouru. Si l'on trouve un parcours plus court, on garde ce nouveau chemin et commence une fois encore à partir de la ville suivante, et on répète jusqu'à trouver le chemin optimale. La quantité de sous chemins a vérifier est sous-quadratique, mais chaque sous-chemin a une quantité différente de villes, donc la complexité de l'algorithme peut exploser facilement.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/chart-2opt.png}
+    \caption{Diagramme de l'algorithme.}
+    \label{fig:charte-2opt}
+\end{figure}
+
+\subsection*{Recuit Simulé}
+consiste à utiliser une solution déjà proposée et à l’améliorer en utilisant des solutions temporaires qui ne sont pas optimales pour éviter les minima-locaux. 
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/charte-recuit.png}
+    \caption{Diagramme de l'algorithme.}
+    \label{fig:charte-recuit}
+\end{figure}
+
+\section*{\underline{Résultats}}
+Voici on presente les résultats obtenus de l'aplication des algorithmes dans des réseaux de villes. Le code est organisé de façon que on peut donner un graine aléatoire qui génère toujours la même réseau, ce que facilite les comparaisons entre algorithmes.
+
+\subsection*{Voisins plus proches}
+Pour essayer l'algorithme des voisins plus proches, on génère une réseau de 50 villes avec un graine égale à 30. On utilise l'algorithme avec trois points de départ différentes: la ville 0, 23 et 42:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{images/NN_50_villes_3departs.pdf}
+    \caption{Résultat pour l'algorithme des Voisins plus proches avec trois départs différents (50 villes). Les départs depuis la ville 0 (gauche), 23 (centre) et 42 (droite).}
+    \label{fig:nn-50}
+\end{figure}
+
+On a que l'algorithme prendre en moyenne 299.61 microsecondes, et pour chaque point de départ on parcours:
+\begin{itemize}
+    \item Départ ville 0 : 669.16.
+    \item Départ ville 23 : 715.63.
+    \item Départ ville 43 : 692.43.
+\end{itemize}
+
+Après ces résultats on peut vérifier que l'optimalité de l'algorithme depends du point de départ, donc il faudrait appliquer l'heuristique 50 fois pour obtenir le meilleur solution possible avec cet algorithme. En particulier on a une ville qui est trop loin des autres, et cela cause de problèmes avec l'optimalité du chemin parcouru (elle génère croisements dans le chemin).
+
+\subsection*{2-opt}
+Pour l'algorithme 2-opt on utilise le même réseau que dans l'heuristique précédent, pour comparer les résultats, avec un départ de la ville 0. Si pour les voisins proches on avait une distance totale de 669.16, avec l'algorithme 2-opt on reduit ce distance à 610.09. Si l'on regarde la Figure \ref{fig:2opt-nn} on voit que cela et dû a l'elimination des croisements, en obtenant un parcours plus directe. Cependant, on a que l'algorithme 2-opt est plus lent. Dans cet exemple, on obtient un temps d'execution de 71.25 milisecondes, qui est trois ordres de magnitude plus grand.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/2opt_50_villes_nn.pdf}
-    \caption{Résultat pour l'algorithme 2-opt et sa comparaison avec le résultat des Voisins plus proches (50 villes).}
+    \caption{Résultat pour l'algorithme 2-opt (gauche) et sa comparaison avec le résultat des Voisins plus proches (droite) pour 50 villes.}
     \label{fig:2opt-nn}
 \end{figure}
+
+Si l'on aplique l'heuristique 2-opt avec un autre solution de voisins plus proches (dans ce cas le même réseau avec départ du ville 23) on a que la distance diminue de 715.63 a 607.72 mais le parcours et différent, ce que nous dit que l'optimalité de l'algorithme 2-opt aussi dépends de sa initialisation.
 
 \begin{figure}[H]
     \centering
@@ -92,6 +134,8 @@ On a donc décider de travailler sur les quatre heuristiques pré-citées afin d
     \caption{Résultat de 2-opt et sa comparaison avec le résultat des Voisins plus proches pour un départ au milieu.}
     \label{fig:2opt-dep23}
 \end{figure}
+
+Finalement, si l'on prendre le parcours avec début dans la ville 42, on a une diminution de la distance parcouru de 692.44 à 609.91, avec l'elimination du grand croisement entre les deux dernières villes.
 
 \begin{figure}[H]
     \centering
@@ -102,7 +146,7 @@ On a donc décider de travailler sur les quatre heuristiques pré-citées afin d
 
 \subsection*{Heuristique d'insertion}
 \paragraph{}
-Pour l'heuristique d'insertion avec 20 villes, on obtient un graphe fluide avec une distance totale de 355.04 pour un temps de calcul de 0.000535 secondes.
+Pour l'heuristique d'insertion avec 20 villes, on obtient un graphe fluide avec une distance totale de 355.04 pour un temps de calcul de 535 microsecondes.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.35\textwidth]{images/insertion_20_villes.pdf}
@@ -111,16 +155,20 @@ Pour l'heuristique d'insertion avec 20 villes, on obtient un graphe fluide avec 
 \end{figure}
 \paragraph{}
 Les résultats obtenus pour l'heuristique d'insertion avec 100 villes sont les suivants :
+
 \begin{itemize}
-    \item distance totale : 930.16
-    \item temps de calcul : 0.024143 secondes
+    \item distance totale : 930.16,
+    \item temps de calcul : 24.143 milisecondes,
 \end{itemize}
+
 tandis que les résultats pour l'heuristique de voisins plus proches sont :
+
 \begin{itemize}
-    \item distance totale : 1062.79
-    \item temps de calcul : 0.000609 secondes\\
-Le second est certe plus rapide que le premier mais il est aussi un peu plus long, et comme on peut le voir sur la figure ci-après, l'heuristique d'insertion ne coupe pas le chemin contrairement au second ce qui le rend plus agréable à étudier. 
+    \item distance totale : 1062.79,
+    \item temps de calcul : 0.609 milisecondes.
 \end{itemize}
+
+Le second est certe plus rapide que le premier mais il est aussi un peu plus long, et comme on peut le voir sur la figure ci-après, l'heuristique d'insertion ne coupe pas le chemin contrairement au second ce qui le rend plus agréable à étudier. 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/insertion_100_villes_nn.pdf}
@@ -130,19 +178,18 @@ Le second est certe plus rapide que le premier mais il est aussi un peu plus lon
 
 \subsection*{Recuit simulé}
 \paragraph{}
-Nous obtenons les mesures suivantes : 
+Nous obtenons les mesures suivantes pour l'heuristique d'insertion : 
 \begin{itemize}
-    \item distance totale : 897.78
-    \item temps de calcul : 0.031324
+    \item distance totale : 897.78,
+    \item temps de calcul : 31.324 milisecondes,
 \end{itemize} 
-pour l'heuristique d'insertion contre :
+contre ces résultats pour le recuit simule:
 \begin{itemize}
-    \item distance totale : 865.26
-    \item temps de calcul : 0.308325 secondes
+    \item distance totale : 865.26,
+    \item temps de calcul : 308.325 milisecondes.
 \end{itemize}
-pour le recuit simule.
 Comme on le constate sur la figure suivante, même si le temps de calcul augmente et est multiplié par 10 par rapport à l'heuristique d'insertion, la distance du chemin est diminuée. 
-Le temps de calcul reste très faible : environ 0.3 secondes, ce qui rend le recuit simulé optimal pour des calculs de chemins avec un nombre de villes important.
+Le temps de calcul reste très faible : environ 300 milisecondes, ce qui rend le recuit simulé optimal pour des calculs de chemins avec un nombre de villes important.
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{images/recuit_simule.pdf}
@@ -150,11 +197,11 @@ Le temps de calcul reste très faible : environ 0.3 secondes, ce qui rend le rec
     \label{fig:recuit}
 \end{figure}
 
-\subsection*{Comparaison et complexité}
-
+\subsection*{Comparaison entre algorithmes}
+Les différents algorithmes analisés ont ses avantages et problèmes, mais sauf cas particulières on les compare pas directement. Ici, on prendre des réseaux avec un graine choisi aléatoirement (3456) de différents dimensions : on génère réseaux de 10, 50, 100, 500 et 1000 villes et l'on applique les différents heuristiques pour trouver les meilleurs solutions de chaque algorithme. Les résultats sont montrés dans le tableau \ref{tab:distances} : 
 \begin{table}[H]
     \centering
-    \caption{Distance obtenu avec les différents algorithmes pour une quantité $N$ de villes.}
+    \caption{Distance obtenue avec les différents algorithmes pour une quantité $N$ de villes.}
     \label{tab:distances}
     \begin{tabular}{lcccc}
         \hline
@@ -167,12 +214,27 @@ Le temps de calcul reste très faible : environ 0.3 secondes, ce qui rend le rec
     \end{tabular}
 \end{table}
 
+La première chose à noter est la manque des données pour l'algorithme 2-opt. Cela est dû à l'inefficience de l'algoritme. Pour un réseau de 100 villes l'algorithme ne converge pas après 5 minutes, donc inutile d'attendre car l'incremente de temps pour les réseaux plus grandes rendra impossible la solution. Cependant, on peut voir que dans les cases ou 2-opt est présente il donne la solution plus optimale au problème pour ce réseau particulier. C'est interessante de noter aussi que pour les réseaux plus petites l'heuristique d'insertion n'est pas plus optimale que les voisins plus proches, mais avec la croissance des réseaux on a une amélioration de la performance de l'heuristique. Mais comme on a déjà vu, l'algorithme des Voisins plus proches est plus vite, donc est intéressante aussi de faire le compromis entre temps et precision.
+
+\subsection*{Complexité temporelle}
+Finalement, on fait un analyse temporelle des algorithmes pour voir la tendance en fonction de la taille des réseaux. Pour ce cas, On utilise les algorithmes pour résoudre le TSP pour réseaux de 10, 50, 100, 500 et 1000 villes, mais cette fois-ci on génère des réseaux aléatoires et pour chaque taille on résoudre le problème 5 fois, pour avoir une significance statistique. Les résultats sont visibles dans la Figure \ref{fig:temps} :
+
 \begin{figure}[H]
     \centering
-    \includegraphics[width=\textwidth]{images/complexite_temporelle.pdf}
+    \includegraphics[width=0.65\textwidth]{images/complexite_temporelle.pdf}
     \caption{Nombre de villes vs. le temps moyenne d'execution des algorithmes.}
     \label{fig:temps}
 \end{figure}
+
+On montre les courbes dans un espace logarithmique pour faire une régression polynomiale qui permettre d'obtenir une droite pour chaque courbe. Ces droites ont pour pente :
+
+\begin{itemize}
+    \item Voisins plus proches : 1.636,
+    \item Heuristique d'insertion : 2.902,
+    \item Recuit simulé : 0.721.
+\end{itemize}
+
+On peut voir que l'algorithme de voisins plus proches, pour les cas que l'on a analysé a un complexité de $\mathcal{O}(n^{1.636})$, qui est dans l'ordre de magnitude de $n^2$, le pire cas. Pour l'heuristique d'insertion on obtient $\mathcal{O}(n^{2.902})$ qui est pire que le $n^2$ attendu, mais dans un marge acceptable. Finalement, on voit que le Recuit simulé donne une complexité $\mathcal{O}(n^{0.721})$, qui est très efficient en comparaison aux autres algorithmes. On peut attendre que pour des réseaux très grandes il serait l'option la plus avantageuse, mais il faut considérer quand même que pour utiliser cette strategie il faut utiliser un autre heuristique avant pour démarrer l'analyse.
 
 \newpage
 
